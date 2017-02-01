@@ -1,0 +1,110 @@
+<!doctype html public>
+<!--[if lt IE 7]> <html lang="en-us" class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html lang="en-us" class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html lang="en-us" class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en-us"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Is it really Beer O'Clock?</title>
+  <meta name="viewport" content="width=device-width">
+
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+  <style type="text/css">
+    * {
+      font-family: sans-serif;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      display: table;
+      width: 100%;
+      height: 100%;
+    }
+    .jumbotron {
+      display: table-cell;
+      vertical-align: middle;
+      font-weight: bold;
+      font-size: 10em;
+      text-align: center;
+    }
+    .web.left {
+      width: 242px;
+      height: 242px;
+      background-image: url("spiderweb-2.jpg");
+      background-position: -243px -243px;
+    }
+    .web.right {
+      float: right;
+      width: 242px;
+      height: 242px;
+      background-image: url("spiderweb-2.jpg");
+      background-position: 0px -243px;
+    }
+    #countdown {
+      position: fixed;
+      bottom: 0px;
+    }
+  </style>
+</head>
+<body>
+  <div class="jumbotron"></div>
+  <span id="countdown"></span>
+</body>
+<script type="text/javascript">
+  function getTimeAndSetDisplay(){
+    now = new Date();
+    hour = now.getHours();
+    day  = now.getDay();
+    if(day == 5 && hour >= 17){
+      res = 'YES!';
+      $('.jumbotron').css({"color":'#'+Math.floor(Math.random()*16777215).toString(16)});
+      // $('.jumbotron').css({"color":' orange'});
+      // $(document.body).css({"background-color":'#000'});
+      $('.web').hide();
+      $('#countdown').hide();
+    }
+    else if(day == 5 && hour == 16){
+      res = 'Almost...';
+    } else {
+      res = 'No.';
+      $('#countdown').hide();
+    }
+    $('.jumbotron').html(res);
+  }
+  setInterval(getTimeAndSetDisplay, 1000);
+
+  // set the date we're counting down to
+  var target_date = new Date("2013", "10", "1", "17", "00", "00").getTime();
+
+  // variables for time units
+  var days, hours, minutes, seconds;
+
+  // get tag element
+  var countdown = $('#countdown');
+
+  // update the tag with id "countdown" every 1 second
+  setInterval(function () {
+
+      // find the amount of "seconds" between now and target
+      var current_date = new Date().getTime();
+      var seconds_left = (target_date - current_date) / 1000;
+
+      // do some time calculations
+      days = parseInt(seconds_left / 86400);
+      seconds_left = seconds_left % 86400;
+
+      hours = parseInt(seconds_left / 3600);
+      seconds_left = seconds_left % 3600;
+
+      minutes = parseInt(seconds_left / 60);
+      seconds = parseInt(seconds_left % 60);
+
+      // format countdown string + set tag value
+      $('#countdown').text(minutes + " minutes and " + seconds + " seconds");
+
+  }, 1000);
+</script>
+</html>
